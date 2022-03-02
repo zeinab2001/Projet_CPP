@@ -21,12 +21,14 @@ CONFIG += c++11
 
 SOURCES += \
     Employe.cpp \
+    enseignant.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp
 
 HEADERS += \
     Employe.h \
+    enseignant.h \
         mainwindow.h \
     connection.h
 
