@@ -25,7 +25,8 @@ void MainWindow::on_pb_ajouter_clicked()
     int id=ui->le_id->text().toInt();
     QString nom=ui->le_nom->text();
     QString prenom=ui->le_prenom->text();
-   Employe E(id,nom,prenom);
+       QString mail=ui->le_mail->text();
+   Employe E(id,nom,prenom,mail);
    bool test=E.ajouter();
 
    QMessageBox msgbox;

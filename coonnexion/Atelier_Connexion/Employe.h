@@ -7,28 +7,30 @@ class Employe
 {
 public:
     Employe();
-    Employe(int,QString,QString);
+    Employe(int,QString,QString,QString);
     int getid();
     QString getnom();
     QString getprenom();
+    QString getmail ();
     void setid(int);
     void setnom(QString);
     void setprenom(QString);
+    void setmail(QString);
     bool ajouter();
     QSqlQueryModel*  afficher();
     bool supprimer(int);
 
-    bool modifier(int,QString,QString);
+    bool modifier(int,QString,QString,QString);
 
     QSqlQueryModel * chercher_nom(QString);
-    QSqlQueryModel * chercher_adresse(QString);
+    QSqlQueryModel * chercher_mail(QString);
     QSqlQueryModel * trier_id();
     QSqlQueryModel * trier_nom();
-    QSqlQueryModel * trier_age();
+
 
 private :
     int id;
-    QString nom,prenom;
+    QString nom,prenom,mail;
 
 
 
