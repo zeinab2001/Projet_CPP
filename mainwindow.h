@@ -3,6 +3,12 @@
 #include "client.h"
 #include <QMainWindow>
 
+////////////
+#include <QDesktopServices>
+#include <QUrl>
+#include <QVector>
+#include<QMainWindow>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -21,6 +27,18 @@ private slots:
     void on_bt_supprimer_clicked();
 
     void on_bt_id_modif_clicked();
+
+    void on_bt_chercher_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_pdf_clicked();
+
+    void on_pushButton_clicked();
+
+    void makePlot();
+
+    QVector<double> statistiques();
 
 private:
     Ui::MainWindow *ui;
