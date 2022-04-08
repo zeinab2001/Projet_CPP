@@ -146,7 +146,7 @@ void MainWindow::on_pushButton_3_clicked()
                              "<body bgcolor=#ffffff link=#5000A0>\n"
                                 "<h1 style=\"text-align: center;\"><strong> "+TT+"</strong></h1>"
                                 +"<img src=C:\\Users\\maato\\Desktop\\Nouveau%20dossier\\fahed.pdf />"
-                                "<h1 style=\"text-align: center;\"><strong> ****LISTE DES  licence commerciale **** </strong></h1>"
+                                "<h1 style=\"text-align: center;\"><strong> ****  LISTE DES FOURNISSEURS   **** </strong></h1>"
 
 
                              "<table style=\"text-align: center; font-size: 20px;\" border=1>\n "
@@ -250,4 +250,21 @@ void MainWindow::on_pb_image_clicked()
             QImage image(fileName);
                 ui->label_pic->setPixmap(QPixmap::fromImage(image));
         }
+}
+
+void MainWindow::on_pushButton_6_sombre_clicked()
+{
+    QFile styleSheetFile("C:/Users/Achraf Nagmar/Desktop/ProjectFournisseurs/Combinear.qss");
+                styleSheetFile.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String (styleSheetFile.readAll());
+                MainWindow::setStyleSheet(styleSheet);
+}
+
+void MainWindow::on_pushButton_6_blanc_clicked()
+{
+    QFile styleSheetFile("C:/Users/Achraf Nagmar/Desktop/ProjectFournisseurs/Integrid.qss");
+                styleSheetFile.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String (styleSheetFile.readAll());
+                MainWindow::setStyleSheet(styleSheet);
+
 }

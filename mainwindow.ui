@@ -17,9 +17,9 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>791</width>
+      <x>40</x>
+      <y>30</y>
+      <width>841</width>
       <height>561</height>
      </rect>
     </property>
@@ -382,6 +382,32 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_6_sombre">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>230</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>sombe</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_6_blanc">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>230</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>blanc</string>
       </property>
      </widget>
     </widget>

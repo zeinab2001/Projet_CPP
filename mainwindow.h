@@ -40,6 +40,10 @@ private slots:
 
     void on_pb_image_clicked();
 
+    void on_pushButton_6_sombre_clicked();
+
+    void on_pushButton_6_blanc_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fournisseurs FRN;
