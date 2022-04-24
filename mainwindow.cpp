@@ -15,6 +15,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 ui->lineEdit_id->setValidator(new QIntValidator(0, 9999999, this));
 ui->tab_client->setModel(c.afficher());
+
+//////
+
+int ret=A.connect_arduino(); // lancer la connexion à arduino
+switch(ret){
+case(0):qDebug()<< "arduino is available and connected to : "<< A.getArduino_port_name();
+    break;
+case(1):qDebug() << "arduino is available but not connected to :" <<A.getArduino_port_name();
+   break;
+case(-1):qDebug() << "arduino is not available";
+}
+ QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+ //le slot update_label suite à la reception du signal readyRead (reception des données).
 }
 
 MainWindow::~MainWindow()
@@ -95,6 +108,8 @@ void MainWindow::on_bt_id_modif_clicked()
     int id_client=ui->lineEdit_id->text().toInt();//toInt converssion chaine->entier
     int age=ui->lineEdit_age->text().toInt();//toInt converssion chaine->entier
 
+
+
     QString nom=ui->lineEdit_nom->text();
     QString prenom=ui->lineEdit_prenom->text();
     QString adresse=ui->lineEdit_adresse->text();
@@ -152,8 +167,8 @@ void MainWindow::on_pushButton_pdf_clicked()
 {
     QPrinter print;
         print.setPrinterName("imprimer");
-        QPrintDialog dialog(&print, this);
-        if(dialog.exec()==QDialog::Rejected) return;
+        QPrintDialog dialog(&print, this); //(QPrinter *printer, QWidget *parent = nullptr)
+        if(dialog.exec()==QDialog::Rejected) return;//signal non arrive
         ui->tab_client->render(&print);
 }
 
@@ -226,7 +241,7 @@ void MainWindow::makePlot()
 
     QCPBars *bars1 = new QCPBars(ui->customplot->xAxis, ui->customplot->yAxis);
     bars1->setWidth(2/(double)x3.size());
-    bars1->setData(x3, MainWindow::statistiques());
+    bars1->setData(x3, MainWindow::statistiques());////fonction statistiques
     bars1->setPen(Qt::NoPen);
     bars1->setBrush(QColor(200, 40, 60, 170));
     ui->customplot->replot();
@@ -239,9 +254,9 @@ void MainWindow::makePlot()
 
     // set some pens, brushes and backgrounds:
     QVector<double> Ticks;
-    Ticks<<1<<2<<3<<4<<5<<6<<7;
+    Ticks<<1<<2<<3<<4<<5<<6<<7;//////
     QVector<QString> labels;
-    labels<<"0-18"<<"18-25"<<"25-30"<<"30-40"<<"40+"<<"ans";
+    labels<<"0-18"<<"18-25"<<"25-30"<<"30-40"<<"40+"<<"ans";////////
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
     textTicker->addTicks(Ticks,labels);
     ui->customplot->xAxis->setTicker(textTicker);
@@ -274,7 +289,7 @@ void MainWindow::makePlot()
     QLinearGradient axisRectGradient;
     axisRectGradient.setStart(0, 0);
     axisRectGradient.setFinalStop(0, 350);
-    axisRectGradient.setColorAt(0, QColor(10, 50, 80));
+    axisRectGradient.setColorAt(0, QColor(10, 50, 80));//
     axisRectGradient.setColorAt(1, QColor(0, 0, 30));
     ui->customplot->axisRect()->setBackground(axisRectGradient);
 
@@ -285,3 +300,18 @@ void MainWindow::makePlot()
 
 }
 
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+
+    if(data=="1")
+
+        ui->label_8->setText("ON"); // si les données reçues de arduino via la liaison série sont égales à 1
+    // alors afficher ON
+
+    else if (data=="0")
+
+        ui->label_8->setText("OFF");   // si les données reçues de arduino via la liaison série sont égales à 0
+     //alors afficher ON}
+
+}

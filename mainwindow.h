@@ -8,6 +8,8 @@
 #include <QUrl>
 #include <QVector>
 #include<QMainWindow>
+///
+#include "arduino.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +22,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 
 private slots:
     void on_bt_ajouter_clicked();
@@ -34,14 +37,19 @@ private slots:
 
     void on_pushButton_pdf_clicked();
 
+    //statisstiques
     void on_pushButton_clicked();
 
     void makePlot();
-
+    void update_label();
     QVector<double> statistiques();
+    ////////
+
 
 private:
     Ui::MainWindow *ui;
     Client c;
+    arduino A;
+    QByteArray data;
 };
 #endif // MAINWINDOW_H

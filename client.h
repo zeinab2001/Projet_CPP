@@ -7,20 +7,22 @@
 class Client
 {
 private:
-    int id_client;
+    int id_client,age;
     QString nom,prenom,adresse;
 
 public:
     //Constructeurs
     Client();
-    Client(int,QString,QString,QString);
+    Client(int,QString,QString,QString,int);
     //Getters
     int getid_client();
+    int getage();
     QString getnom();
     QString getprenom();
     QString getadresse();
     //Setters
     void setid_client(int);
+    void setage(int);
     void setnom(QString);
     void setprenom(QString);
     void setadresse(QString );
@@ -29,6 +31,12 @@ public:
     QSqlQueryModel* afficher();
     bool supprimer(int);
     bool modifier(int);
+    QSqlQueryModel * rechercher(QString);
+    QSqlQueryModel * tri();
+    //
+
+
+
 
 };
 
