@@ -223,9 +223,9 @@ void MainWindow::on_pushButton_4_clicked()
                 model->setQuery("select * from fournisseurs where NB_ETOILES >10 ");
                 float tailleee=model->rowCount();
                 float total=taille+taillee+tailleee;
-                QString a=QString("fournisseurs trees fidele . "+QString::number((taille*100)/total,'f',2)+"%" );
-                QString b=QString("fournisseur fidele .  "+QString::number((taillee*100)/total,'f',2)+"%" );
-                QString c=QString("fournisseur normal ."+QString::number((tailleee*100)/total,'f',2)+"%" );
+                QString a=QString("fournisseur avec une mauvaise qualité de produit  . "+QString::number((taille*100)/total,'f',2)+"%" );
+                QString b=QString("fournisseur avec une moyenne qualité de produit   .  "+QString::number((taillee*100)/total,'f',2)+"%" );
+                QString c=QString("fournisseur avec une bonne qualité de produit  ."+QString::number((tailleee*100)/total,'f',2)+"%" );
                 QPieSeries *series = new QPieSeries();
                 series->append(a,taille);
                 series->append(b,taillee);
