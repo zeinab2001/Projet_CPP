@@ -12,9 +12,10 @@ class Fournisseurs
     QString Produit;
     QString Date_Arrivee;
     QString Nom;
+    int Etoiles;
 public:
     Fournisseurs();
-    Fournisseurs(int, int, QString, QString, QString, QString);
+    Fournisseurs(int, int, QString, QString, QString, QString, int);
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int);

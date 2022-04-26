@@ -30,6 +30,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewAffichage->setModel(FRN.afficher());
     ui->lineEdit_id->setValidator(new QIntValidator(0, 99999999, this));
     ui->lineEdit_tel->setValidator(new QIntValidator(0, 99999999, this));
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +47,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+
+    if(data=="1")
+
+        ui->label_20->setText("in"); // si les données reçues de arduino via la liaison série sont égales à 1
+    // alors afficher ON
+
+    else if (data=="0")
+
+        ui->label_20->setText("out");   // si les données reçues de arduino via la liaison série sont égales à 0
+     //alors afficher ON
+}
 
 void MainWindow::on_pushButton_Ajouter_clicked()
 {
@@ -46,7 +70,8 @@ void MainWindow::on_pushButton_Ajouter_clicked()
     QString produit = ui->lineEdit_produit->text();
     QString date_arrivee = ui->lineEdit_email_2->text();
     QString nom = ui->lineEdit_nom->text();
-    Fournisseurs F(id, num, email, produit, date_arrivee, nom);
+    int etoiles = ui->lineEdit_etoiles->text().toInt();
+    Fournisseurs F(id, num, email, produit, date_arrivee, nom, etoiles);
     bool test = F.ajouter();
 
     if (test){
@@ -90,7 +115,8 @@ void MainWindow::on_pushButton_Modifier_clicked()
     QString produit = ui->lineEdit_produit->text();
     QString date_arrivee = ui->lineEdit_email_2->text();
     QString nom = ui->lineEdit_nom->text();
-    Fournisseurs F(id, num, email, produit, date_arrivee, nom);
+    int etoiles = ui->lineEdit_etoiles->text().toInt();
+    Fournisseurs F(id, num, email, produit, date_arrivee, nom, etoiles);
     bool test = F.modifier();
 
     if (test){
@@ -190,16 +216,16 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //ui->stackedWidget_2->setCurrentIndex(1);
                 QSqlQueryModel * model= new QSqlQueryModel();
-                model->setQuery("select * from fournisseurs where id_fournisseur < 199 ");
+                model->setQuery("select * from fournisseurs where NB_ETOILES < 5 ");
                 float taille=model->rowCount();
-                model->setQuery("select * from fournisseurs where id_fournisseur  between 199 and 299 ");
+                model->setQuery("select * from fournisseurs where NB_ETOILES  between 5 and 10 ");
                 float taillee=model->rowCount();
-                model->setQuery("select * from fournisseurs where id_fournisseur >299 ");
+                model->setQuery("select * from fournisseurs where NB_ETOILES >10 ");
                 float tailleee=model->rowCount();
                 float total=taille+taillee+tailleee;
-                QString a=QString("fournisseurs fidele . "+QString::number((taille*100)/total,'f',2)+"%" );
-                QString b=QString("fournisseur non fidele .  "+QString::number((taillee*100)/total,'f',2)+"%" );
-                QString c=QString("fournisseur en cas d urgence ."+QString::number((tailleee*100)/total,'f',2)+"%" );
+                QString a=QString("fournisseurs trees fidele . "+QString::number((taille*100)/total,'f',2)+"%" );
+                QString b=QString("fournisseur fidele .  "+QString::number((taillee*100)/total,'f',2)+"%" );
+                QString c=QString("fournisseur normal ."+QString::number((tailleee*100)/total,'f',2)+"%" );
                 QPieSeries *series = new QPieSeries();
                 series->append(a,taille);
                 series->append(b,taillee);
@@ -266,5 +292,17 @@ void MainWindow::on_pushButton_6_blanc_clicked()
                 styleSheetFile.open(QFile::ReadOnly);
                 QString styleSheet = QLatin1String (styleSheetFile.readAll());
                 MainWindow::setStyleSheet(styleSheet);
+
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    A.write_to_arduino("1"); //envoyer 1 à arduino
+
+}
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    A.write_to_arduino("0");  //envoyer 0 à arduino
 
 }

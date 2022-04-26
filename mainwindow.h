@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include "fournisseurs.h"
 #include <QMainWindow>
-
+#include "arduino.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -36,16 +36,26 @@ private slots:
 
     void on_pushButton_4_clicked();
 
-    void on_pushButton_6_clicked();
 
     void on_pb_image_clicked();
 
     void on_pushButton_6_sombre_clicked();
 
     void on_pushButton_6_blanc_clicked();
+    void update_label();   // slot permettant la mise à jour du label état de la lampe 1,
+    // ce slot est lancé à chaque réception d'un message de Arduino
+
+
+
+    void on_pushButton_11_clicked();
+
+    void on_pushButton_12_clicked();
 
 private:
     Ui::MainWindow *ui;
     Fournisseurs FRN;
+    QByteArray data; // variable contenant les données reçues
+
+    Arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H
