@@ -43,12 +43,10 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QPushButton *pushButton;
-    QPushButton *pushButton_2;
     QPushButton *pushButton_4;
     QGroupBox *groupBox_2;
     QLabel *label_5;
     QLineEdit *lineEdit_5;
-    QPushButton *pushButton_3;
     QWidget *tab_5;
     QWidget *tab_2;
     QWidget *tab_3;
@@ -57,6 +55,8 @@ public:
     QGroupBox *groupBox;
     QListView *listView;
     QScrollBar *horizontalScrollBar;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_2;
     QPushButton *pushButton_5;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -111,20 +111,15 @@ public:
 "font: italic 22pt \"Monotype Corsiva\";"));
         label_4 = new QLabel(tab);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(90, 210, 71, 41));
+        label_4->setGeometry(QRect(50, 210, 151, 41));
         label_4->setStyleSheet(QLatin1String("\n"
 "\n"
 "font: italic 22pt \"Monotype Corsiva\";"));
         pushButton = new QPushButton(tab);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(450, 60, 111, 41));
+        pushButton->setGeometry(QRect(460, 50, 111, 41));
         pushButton->setStyleSheet(QLatin1String("color rgb(170, 85, 127qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 0, 0, 0), stop:0.52 rgba(0, 0, 0, 0), stop:0.565 rgba(82, 121, 76, 33), stop:0.65 rgba(159, 235, 148, 64), stop:0.721925 rgba(255, 238, 150, 129), stop:0.77 rgba(255, 128, 128, 204), stop:0.89 rgba(191, 128, 255, 64), stop:1 rgba(0, 0, 0, 0)));\n"
 "border-color: rgb(170, 85, 127);\n"
-"font: italic 15pt \"Monotype Corsiva\";"));
-        pushButton_2 = new QPushButton(tab);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(450, 190, 101, 41));
-        pushButton_2->setStyleSheet(QLatin1String("\n"
 "font: italic 15pt \"Monotype Corsiva\";"));
         pushButton_4 = new QPushButton(tab);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
@@ -138,11 +133,6 @@ public:
         lineEdit_5 = new QLineEdit(groupBox_2);
         lineEdit_5->setObjectName(QStringLiteral("lineEdit_5"));
         lineEdit_5->setGeometry(QRect(120, 50, 181, 22));
-        pushButton_3 = new QPushButton(groupBox_2);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        pushButton_3->setGeometry(QRect(360, 50, 111, 41));
-        pushButton_3->setStyleSheet(QLatin1String("\n"
-"font: italic 15pt \"Monotype Corsiva\";"));
         tabWidget->addTab(tab, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QStringLiteral("tab_5"));
@@ -173,6 +163,16 @@ public:
         horizontalScrollBar->setObjectName(QStringLiteral("horizontalScrollBar"));
         horizontalScrollBar->setGeometry(QRect(20, 250, 521, 20));
         horizontalScrollBar->setOrientation(Qt::Horizontal);
+        pushButton_3 = new QPushButton(groupBox);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(390, 100, 111, 41));
+        pushButton_3->setStyleSheet(QLatin1String("\n"
+"font: italic 15pt \"Monotype Corsiva\";"));
+        pushButton_2 = new QPushButton(groupBox);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(400, 160, 101, 41));
+        pushButton_2->setStyleSheet(QLatin1String("\n"
+"font: italic 15pt \"Monotype Corsiva\";"));
         pushButton_5 = new QPushButton(centralwidget);
         pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
         pushButton_5->setGeometry(QRect(970, 440, 111, 41));
@@ -198,16 +198,18 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        lineEdit->setText(QApplication::translate("MainWindow", "123", Q_NULLPTR));
+        lineEdit_2->setText(QApplication::translate("MainWindow", "ill", Q_NULLPTR));
+        lineEdit_3->setText(QApplication::translate("MainWindow", "yees", Q_NULLPTR));
+        lineEdit_4->setText(QApplication::translate("MainWindow", "ccccc", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Identifiant", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "Pr\303\251nom", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWindow", "Nom", Q_NULLPTR));
-        label_4->setText(QApplication::translate("MainWindow", "Age", Q_NULLPTR));
+        label_4->setText(QApplication::translate("MainWindow", "ADRESSE", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "Ajouter", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Modifier", Q_NULLPTR));
         pushButton_4->setText(QApplication::translate("MainWindow", "PDF", Q_NULLPTR));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "suppression", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "ID", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Supprimer", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "gestion des employ\303\251s", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "tri.rechercher", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "PDF", Q_NULLPTR));
@@ -215,6 +217,8 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Chat", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "gestions des commandes", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("MainWindow", "Listes des employ\303\251s", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Supprimer", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Modifier", Q_NULLPTR));
         pushButton_5->setText(QApplication::translate("MainWindow", "EXCEL", Q_NULLPTR));
     } // retranslateUi
 

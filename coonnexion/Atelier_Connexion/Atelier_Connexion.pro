@@ -1,4 +1,5 @@
-QT       += core gui sql
+QT       += core gui sql \
+    quick
 CONFIG += console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,17 +20,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-    Employe.cpp \
+    EMPLOYEES.cpp \
+    arduino.cpp \
     enseignant.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
-    Employe.h \
+    EMPLOYEES.h \
+    arduino.h \
     enseignant.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    qcustomplot.h
 
 FORMS += \
         mainwindow.ui
