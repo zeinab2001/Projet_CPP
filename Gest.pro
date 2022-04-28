@@ -1,4 +1,4 @@
-QT       += core gui sql printsupport serialport
+QT       += core gui sql printsupport serialport charts multimedia multimediawidgets widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,6 +19,7 @@ SOURCES += \
     arduino.cpp \
     client.cpp \
     connection.cpp \
+    fournisseurs.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
@@ -27,6 +28,7 @@ HEADERS += \
     arduino.h \
     client.h \
     connection.h \
+    fournisseurs.h \
     mainwindow.h \
     qcustomplot.h
 

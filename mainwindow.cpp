@@ -8,16 +8,41 @@
 #include<QtPrintSupport/QPrintDialog>
 #include <QVector>
 
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+
+#include <QPrinter>
+#include <QtPrintSupport/QPrinter>
+#include <QPrintDialog>
+#include <QTextDocument>
+#include <QTextStream>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(2);
+
 ui->lineEdit_id->setValidator(new QIntValidator(0, 9999999, this));
 ui->tab_client->setModel(c.afficher());
 
 //////
 
+ui->tableViewAffichagei->setModel(FRN.afficher());
+ui->lineEdit_idi->setValidator(new QIntValidator(0, 99999999, this));
+ui->lineEdit_teli->setValidator(new QIntValidator(0, 99999999, this));
 int ret=A.connect_arduino(); // lancer la connexion à arduino
 switch(ret){
 case(0):qDebug()<< "arduino is available and connected to : "<< A.getArduino_port_name();
@@ -314,4 +339,263 @@ void MainWindow::update_label()
         ui->label_8->setText("OFF");   // si les données reçues de arduino via la liaison série sont égales à 0
      //alors afficher ON}
 
+}
+void MainWindow::on_pushButton_Ajouteri_clicked()
+{
+    int id = ui->lineEdit_idi->text().toInt();
+    int num = ui->lineEdit_teli->text().toInt();
+    QString email = ui->lineEdit_emaili->text();
+    QString produit = ui->lineEdit_produiti->text();
+    QString date_arrivee = ui->lineEdit_email_2i->text();
+    QString nom = ui->lineEdit_nomi->text();
+    int etoiles = ui->lineEdit_etoilesi->text().toInt();
+    Fournisseurs F(id, num, email, produit, date_arrivee, nom, etoiles);
+    bool test = F.ajouter();
+
+    if (test){
+        ui->tableViewAffichagei->setModel(FRN.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Ajout effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Ajouter non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_pushButton_Supprimeri_clicked()
+{
+    int id = ui->lineEdit_id_suppressioni->text().toInt();
+    bool test = FRN.supprimer(id);
+
+    if (test){
+        ui->tableViewAffichagei->setModel(FRN.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Suppression effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Suppression non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_pushButton_Modifieri_clicked()
+{
+    int id = ui->lineEdit_idi->text().toInt();
+    int num = ui->lineEdit_teli->text().toInt();
+    QString email = ui->lineEdit_emaili->text();
+    QString produit = ui->lineEdit_produiti->text();
+    QString date_arrivee = ui->lineEdit_email_2i->text();
+    QString nom = ui->lineEdit_nomi->text();
+    int etoiles = ui->lineEdit_etoilesi->text().toInt();
+    Fournisseurs F(id, num, email, produit, date_arrivee, nom, etoiles);
+    bool test = F.modifier();
+
+    if (test){
+        ui->tableViewAffichagei->setModel(FRN.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Database is open"),
+                              QObject::tr("Modification effectué"),
+                              QMessageBox::Ok
+                              );
+    }else{
+        QMessageBox::critical(nullptr, QObject::tr("Database is not open"),
+                              QObject::tr("Modification non effectué"),
+                              QMessageBox::Cancel
+                              );
+    }
+}
+
+void MainWindow::on_pushButtoni_clicked()
+{
+    ui->tableViewAffichagei->setModel(FRN.trier());
+}
+
+void MainWindow::on_pushButton_Actualiseri_clicked()
+{
+    ui->tableViewAffichagei->setModel(FRN.afficher());
+}
+
+void MainWindow::on_pushButton_2i_clicked()
+{
+    ui->tableViewAffichagei->setModel(FRN.trierNom());
+}
+
+void MainWindow::on_pushButton_chercheri_clicked()
+{
+    QString rech_field = ui->lineEdit_nom_recherchei->text();
+    ui->tableViewAffichagei->setModel(FRN.chercher(rech_field));
+
+}
+
+void MainWindow::on_pushButton_3i_clicked()
+{
+    QString strStream;
+
+                         QTextStream out(&strStream);
+
+                         const int rowCount = ui->tableViewAffichagei->model()->rowCount();
+                         const int columnCount = ui->tableViewAffichagei->model()->columnCount();
+                         QString TT = QDateTime::currentDateTime().toString();
+                         out <<"<html>\n"
+                               "<head>\n"
+                                "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                             << "<title>ERP - COMmANDE LIST<title>\n "
+                             << "</head>\n"
+                             "<body bgcolor=#ffffff link=#5000A0>\n"
+                                "<h1 style=\"text-align: center;\"><strong> "+TT+"</strong></h1>"
+                                +"<img src=C:\\Users\\maato\\Desktop\\Nouveau%20dossier\\fahed.pdf />"
+                                "<h1 style=\"text-align: center;\"><strong> ****  LISTE DES FOURNISSEURS   **** </strong></h1>"
+
+
+                             "<table style=\"text-align: center; font-size: 20px;\" border=1>\n "
+                               "</br> </br>";
+                         // headers
+                         out << "<thead><tr bgcolor=#d6e5ff>";
+                         for (int column = 0; column < columnCount; column++)
+                             if (!ui->tableViewAffichagei->isColumnHidden(column))
+                                 out << QString("<th>%1</th>").arg(ui->tableViewAffichagei->model()->headerData(column, Qt::Horizontal).toString());
+                         out << "</tr></thead>\n";
+
+                         // data table
+                         for (int row = 0; row < rowCount; row++) {
+                             out << "<tr>";
+                             for (int column = 0; column < columnCount; column++) {
+                                 if (!ui->tableViewAffichagei->isColumnHidden(column)) {
+                                     QString data =ui->tableViewAffichagei->model()->data(ui->tableViewAffichagei->model()->index(row, column)).toString().simplified();
+                                     out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                                 }
+                             }
+                             out << "</tr>\n";
+                         }
+                         out <<  "</table>\n"
+                             "</body>\n"
+                             "</html>\n";
+
+                         QTextDocument *document = new QTextDocument();
+                         document->setHtml(strStream);
+
+                         QPrinter printer;
+
+                         QPrintDialog *dialog = new QPrintDialog(&printer, nullptr);
+                         if (dialog->exec() == QDialog::Accepted) {
+                             document->print(&printer);
+                         }
+
+                         delete document;
+}
+
+void MainWindow::on_pushButton_4i_clicked()
+{
+    //ui->stackedWidget_2->setCurrentIndex(1);
+                QSqlQueryModel * model= new QSqlQueryModel();
+                model->setQuery("select * from fournisseurs where NB_ETOILES < 5 ");
+                float taille=model->rowCount();
+                model->setQuery("select * from fournisseurs where NB_ETOILES  between 5 and 10 ");
+                float taillee=model->rowCount();
+                model->setQuery("select * from fournisseurs where NB_ETOILES >10 ");
+                float tailleee=model->rowCount();
+                float total=taille+taillee+tailleee;
+                QString a=QString("fournisseur avec une mauvaise qualité de produit  . "+QString::number((taille*100)/total,'f',2)+"%" );
+                QString b=QString("fournisseur avec une moyenne qualité de produit   .  "+QString::number((taillee*100)/total,'f',2)+"%" );
+                QString c=QString("fournisseur avec une bonne qualité de produit  ."+QString::number((tailleee*100)/total,'f',2)+"%" );
+                QPieSeries *series = new QPieSeries();
+                series->append(a,taille);
+                series->append(b,taillee);
+                series->append(c,tailleee);
+                if (taille!=0)
+                {QPieSlice *slice = series->slices().at(0);
+                    slice->setLabelVisible();
+                    slice->setPen(QPen());}
+                if ( taillee!=0)
+                {
+                    // Add label, explode and define brush for 2nd slice
+                    QPieSlice *slice1 = series->slices().at(1);
+                    //slice1->setExploded();
+                    slice1->setLabelVisible();
+                }
+                if(tailleee!=0)
+                {
+                    // Add labels to rest of slices
+                    QPieSlice *slice2 = series->slices().at(2);
+                    //slice1->setExploded();
+                    slice2->setLabelVisible();
+                }
+                // Create the chart widget
+                QChart *chart = new QChart();
+                // Add data to chart with title and hide legend
+                chart->addSeries(series);
+                chart->setTitle("distribution fournisseurs :Nombre Des fournisseurs "+ QString::number(total));
+                chart->legend()->hide();
+                // Used to display the chart
+                QChartView *chartView = new QChartView(chart);
+                chartView->setRenderHint(QPainter::Antialiasing);
+                chartView->resize(1000,500);
+                chartView->show();
+}
+
+
+
+
+void MainWindow::on_pb_imagei_clicked()
+{
+    QFileDialog dialog(this);
+        dialog.setNameFilter(tr("Images (*.png *.xpm *.jpg)"));
+        dialog.setViewMode(QFileDialog::Detail);
+        QString fileName =QFileDialog::getOpenFileName(this, tr("Open Images"), "C:/Users/Achraf Nagmar/Desktop/ProjectFournisseurs", tr("Image Files (*.png *.jpg *.bmp)"));
+    //to select and show the picture
+        if (!fileName.isEmpty())
+        {
+            QImage image(fileName);
+                ui->label_pic->setPixmap(QPixmap::fromImage(image));
+        }
+}
+
+void MainWindow::on_pushButton_6_sombrei_clicked()
+{
+    QFile styleSheetFile("C:/Users/Achraf Nagmar/Desktop/ProjectFournisseurs/Combinear.qss");
+                styleSheetFile.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String (styleSheetFile.readAll());
+                MainWindow::setStyleSheet(styleSheet);
+}
+
+void MainWindow::on_pushButton_6_blanci_clicked()
+{
+    QFile styleSheetFile("C:/Users/Achraf Nagmar/Desktop/ProjectFournisseurs/Integrid.qss");
+                styleSheetFile.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String (styleSheetFile.readAll());
+                MainWindow::setStyleSheet(styleSheet);
+
+}
+
+void MainWindow::on_pushButton_11i_clicked()
+{
+    A.write_to_arduino("1"); //envoyer 1 à arduino
+
+}
+
+void MainWindow::on_pushButton_12i_clicked()
+{
+    A.write_to_arduino("0");  //envoyer 0 à arduino
+
+}
+
+void MainWindow::on_pushButton_cliets_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButton_four_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_pushButton_REtourr_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
 }

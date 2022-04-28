@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 #include "client.h"
 #include <QMainWindow>
+#include "fournisseurs.h"
+
 
 ////////////
 #include <QDesktopServices>
@@ -45,10 +47,48 @@ private slots:
     QVector<double> statistiques();
     ////////
 
+    void on_pushButton_Ajouteri_clicked();
+
+    void on_pushButton_Supprimeri_clicked();
+
+    void on_pushButton_Modifieri_clicked();
+
+
+
+    void on_pushButtoni_clicked();
+
+    void on_pushButton_Actualiseri_clicked();
+
+    void on_pushButton_2i_clicked();
+
+    void on_pushButton_chercheri_clicked();
+
+    void on_pushButton_3i_clicked();
+
+    void on_pushButton_4i_clicked();
+
+
+    void on_pb_imagei_clicked();
+
+    void on_pushButton_6_sombrei_clicked();
+
+    void on_pushButton_6_blanci_clicked();
+
+    void on_pushButton_11i_clicked();
+
+    void on_pushButton_12i_clicked();
+
+
+    void on_pushButton_cliets_clicked();
+
+    void on_pushButton_four_clicked();
+
+    void on_pushButton_REtourr_clicked();
 
 private:
     Ui::MainWindow *ui;
     Client c;
+    Fournisseurs FRN;
     arduino A;
     QByteArray data;
 };
